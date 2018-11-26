@@ -9,3 +9,7 @@ Files:
 
 2) BS_analysis.ipynb				script for BS data, for looping over scan data.
 						Version from November 2018, after Febpy commissioning beamtime -- p17589
+
+
+3) alvra_exp-Copy5.ipynb			script for JF4p5 data.
+						This is an old file which was the basis for developing the XES_scans_analysis file
