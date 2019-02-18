@@ -40,8 +40,13 @@ Scripts for the analysis of YAG pump probe data for T0 determination:
 						Most recent version, updated and used during the SFX Rhodopsin beamtime -- p17569
 
 8) YAG_scans_json.ipynb				script for YAG scans, with more efficient and fast data loading and on/off distribution.
-						Version created in January 2019, prepared for the CytC beaamtime -- p17803
+						Version created in January 2019, prepared for the CytC beamtime -- p17803
 
+9) YAG_scans_json_norm.ipynb			script for YAG scans, status as at the end of the CytC beamtime -- p17803
+						Added normalization shot-to-shot, ready for KR2 sfx beamtime -- p17806
+
+10) YAG_scans_json_norm_Izero.ipynb		Same as before, but with additional condition on Izero intensity.
+						Ready for KR2 sfx beamtime -- p17806
 
 
 Scripts for the analysis of the knife edge scans for xray & laser spotsize determination: 
