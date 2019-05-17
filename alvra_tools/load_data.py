@@ -124,3 +124,76 @@ def load_YAG_pulseID(filename, reprateFEL, repratelaser):
     return LaserDiode_pump, LaserDiode_unpump, LaserRefDiode_pump, LaserRefDiode_unpump, IzeroFEL, PIPS, Delay, BAM, pulse_ids
 
 
+def load_laserIntensity(filename):
+    with h5py.File(filename, 'r') as BS_file:
+        pulse_ids = BS_file[channel_BS_pulse_ids][:]
+        
+        FEL = BS_file[channel_Events][:,48]
+        Laser = BS_file[channel_Events][:,18]
+        Darkshot = BS_file[channel_Events][:,21]
+        Jungfrau = BS_file[channel_Events][:,40]
+        
+        index_light = np.logical_and(Jungfrau,Laser,np.logical_not(Darkshot))
+        
+        DataFEL = BS_file[channel_PIPS_trans][:][index_light]
+        DataLaser = BS_file[channel_LaserDiode_DIAG][:][index_light]
+        
+        Izero = BS_file[channel_Izero][:][index_light]
+        Position = BS_file[channel_position][:][index_light]
+        
+        PulseIDs = pulse_ids[:][index_light] 
+        
+    return DataFEL, DataLaser, Izero, Position, PulseIDs
+
+
+def load_FEL_scans(filename, channel):
+    with h5py.File(filename, 'r') as BS_file:
+        pulse_ids = BS_file[channel_BS_pulse_ids][:]
+        
+        FEL = BS_file[channel_Events][:,48]
+        index_light = FEL
+        
+        DataFEL = BS_file[channel_PIPS_trans][:][index_light]
+        Izero = BS_file[channel_Izero][:][index_light]        
+        Variable = BS_file[channel][:][index_light]
+        
+        PulseIDs = pulse_ids[:][index_light] 
+        
+    return DataFEL, Izero, Variable, PulseIDs
+
+
+def load_knifeEdge_FEL(filename):
+    with h5py.File(filename, 'r') as BS_file:
+        pulse_ids = BS_file[channel_BS_pulse_ids][:]
+        
+        FEL = BS_file[channel_Events][:,48]
+        index_light = FEL
+        
+        DataFEL = BS_file[channel_PIPS_trans][:][index_light]
+        Izero = BS_file[channel_Izero][:][index_light]
+        Position = BS_file[cahnnel_position][:][index_light]
+        
+        PulseIDs = pulse_ids[:][index_light] 
+        
+    return DataFEL, Izero, Position, PulseIDs
+
+
+def load_knifeEdge_laser(filename):
+    with h5py.File(filename, 'r') as BS_file:
+        pulse_ids = BS_file[channel_BS_pulse_ids][:]
+        
+        Laser = BS_file[channel_Events][:,18]
+        index_light = Laser
+        
+        DataLaser = BS_file[channel_LaserDiode][:][index_light]
+        
+        Position = BS_file[channel_position][:][index_light]
+        
+        PulseIDs = pulse_ids[:][index_light] 
+        
+    return DataLaser, Position, PulseIDs
+
+
+
+
+
