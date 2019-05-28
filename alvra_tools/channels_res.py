@@ -27,7 +27,7 @@ channel_Laser_diag     = "SLAAR11-LSCP1-FNS:CH4:VAL_GET/data"            #Laser 
 
 channel_PALM_eTOF      = "SAROP11-PALMK118:CH2_BUFFER/data"              #PALM eTof from Ch2
 channel_PALM_drift     = "SAROP11-PALMK118:CH2_VAL_GET/data"             #PALM drift
-channel_BAM            = "S10BC01-DBAM070:EOM1_T1/data"                  #BAM arrival time
+#channel_BAM            = "S10BC01-DBAM070:EOM1_T1/data"                  #BAM arrival time
 
 #channel_laser_yaw      = "SLAAR11-LTIM01-EVR0:DUMMY_PV2_NBS/data"        #Laser mirror rotation Smaract motor
 #channel_laser_pitch    = "SLAAR11-LTIM01-EVR0:DUMMY_PV4_NBS/data"        #Laser mirror pitch Smaract motor

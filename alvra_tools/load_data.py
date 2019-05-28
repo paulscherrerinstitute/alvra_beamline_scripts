@@ -1,7 +1,7 @@
 import h5py
 import numpy as np
 
-#from .channels_res import channel_JF_images, channel_JF_pulse_ids
+#from .channels_raw import *
 from .channels_res import *
 from .utils import crop_roi
 
@@ -78,6 +78,7 @@ def load_JF_data_crop2(filename, roi1, roi2):
 
 def load_YAG_events(filename):
     with h5py.File(filename, 'r') as BS_file:
+        
         pulse_ids = BS_file[channel_BS_pulse_ids][:]
         
         FEL = BS_file[channel_Events][:,48]
@@ -97,9 +98,9 @@ def load_YAG_events(filename):
         Delay = BS_file[channel_delay][:][index_unpump]
         #Delay = BS_file[channel_laser_pitch][:][index_unpump]
         
-        BAM = BS_file[channel_BAM][:][index_pump]
+        #BAM = BS_file[channel_BAM][:][index_pump]
         
-    return LaserDiode_pump, LaserDiode_unpump, LaserRefDiode_pump, LaserRefDiode_unpump, IzeroFEL, PIPS, Delay, BAM, pulse_ids
+    return LaserDiode_pump, LaserDiode_unpump, LaserRefDiode_pump, LaserRefDiode_unpump, IzeroFEL, PIPS, Delay, pulse_ids
 
 
 def load_YAG_pulseID(filename, reprateFEL, repratelaser):
@@ -119,9 +120,9 @@ def load_YAG_pulseID(filename, reprateFEL, repratelaser):
         Delay = BS_file[channel_delay][:][reprate_laser]
         #Delay = BS_file[channel_laser_pitch][:][index_unpump]
         
-        BAM = BS_file[channel_BAM][:][reprate_FEL]
+        #BAM = BS_file[channel_BAM][:][reprate_FEL]
         
-    return LaserDiode_pump, LaserDiode_unpump, LaserRefDiode_pump, LaserRefDiode_unpump, IzeroFEL, PIPS, Delay, BAM, pulse_ids
+    return LaserDiode_pump, LaserDiode_unpump, LaserRefDiode_pump, LaserRefDiode_unpump, IzeroFEL, PIPS, Delay, pulse_ids
 
 
 def load_laserIntensity(filename):
