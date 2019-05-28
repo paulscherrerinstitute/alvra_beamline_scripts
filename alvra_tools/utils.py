@@ -41,8 +41,19 @@ def crop_roi(arr, roi):
     return arr[..., r0, r1]
 
 
-def errfunc(x, a, b, c, d):
-    return a + b*erf((c-x)*2*np.sqrt(np.log(2))/(np.abs(d)))
+def errfunc_fwhm(x, a, b, c, d):
+    return a + b*erf((c-x)*2*np.sqrt(np.log(2))/(np.abs(d)))         #d is fwhm
 
+def errfunc_1e2(x, a, b, c, d):
+    return a + b*erf((c-x)*2*np.sqrt(2*np.log(2))/(np.abs(d)))       #d is 1/e2, 1/e2 = 1.699 * fwhm
+
+def errfunc_sigma(x, a, b, c, d):
+    return a + b*erf((c-x)/(np.sqrt(2)*np.abs(d)))                   #d is sigma, fwhm = 2.355 * sigma
+
+
+#def errfunc(x, a, b, c, d):
+    #return a + b*erf((c-x)*2*np.sqrt(np.log(2))/(np.abs(d)))              #d is fwhm
+    #return a + b*erf((c-x)*2*np.sqrt(2*np.log(2))/(np.abs(d)))           #d is 1/e2, 1/e2 = 1.699 * fwhm
+    #return a + b*erf((c-x)/(np.sqrt(2)*np.abs(d)))                       #d is sigma, fwhm = 2.355 * sigma
 
 
