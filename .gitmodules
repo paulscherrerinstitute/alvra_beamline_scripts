@@ -1,0 +1,3 @@
+[submodule "alvra_tools"]
+	path = alvra_tools
+	url = https://github.com/paulscherrerinstitute/alvra_tools.git
