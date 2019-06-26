@@ -5,38 +5,32 @@ Files:
 
 Sripts for JF data loading and plotting:
 
-1) alvra_exp-Copy5.ipynb                        Very first script for the analysis of the JF4p5 data.
-                                                This is an old file which was the basis for developing the other files
-						Version from July 2018, after TiO2 beamtime -- p17245
-
-2) XES_scans_analysis_Febpy_Oct18.ipynb		script for JF4p5 data, single files or for looping over scan data
-						Not normalized data.
-						Version from November 2018, after Febpy commissioning beamtime -- p17589
-
-3) XES_analysis_BSnorm.ipynb			script for JF4p5 data, single files or for looping over scan data
-						The data are normalized with the Izero data saved in the BSREAD parallel file
-                                                Version from November 2018, after Febpy commissioning beamtime -- p17589
-
-4) XES_scans_json_final.ipynb			script for JF4p5 data, can be used for analysis of 3 different kind of files:
+1) XES_scans_process.ipynb			script to select ROIs in the JF4p5 data and save only cropped data.
+						This is *not* used for any analysis.
+						Use it to crop/process (pedestals & gain corrections and save the raw data)
+						This procedure has been made automatic with the watcher.py and the associated 
+						XES_process.py script, but can be still run manually with this notebook.
+						
+2) XES_scans_json_final.ipynb			script for JF4p5 data, can be used for analysis of 3 different kind of files:
 						a) individual independent files (recorded with bsdaqJF.acquire)
 						b) individual files in a scan (recorded with scansJF.ascan)
 						c) looping through all the files of a scan (recorded with scansJF.ascan)
-
-5) XES_scans_process.ipynb			script to select ROIs in the JF4p5 data and save only cropped data.
-						This is *not* used for any analysis.
-						Use it to crop/process (pedestals & gain corrections and save the raw data)
-
-
+						This script loads the all image from the detector and does the ROI selection.
+						If the ROIs have been already saved in a separate (smaller) file, use the 
+						"XES_scans_readout_cropped_final.ipynb" script.
+						
+3) XES_scans_readout_cropped_final.ipynb	script for JF4p5 data, used for analysis of single files or files in a scan.
+						Used for cropped data.
+						
+						
 Scripts for BS data loading and plotting:
 
-1) BS_analysis.ipynb				script for BS data only (no JF), for looping over scan data.
-						Version from November 2018, after Febpy commissioning beamtime -- p17589
+1) BS_check_Laser_int.ipynb			script for BS data only (no JF), to look at signals from laser diodes.
+						Used to confirm illumination mode (4/1, 11/1, 19/1) etc etc.
+						
+2) BSread_singleChannel.ipynb			simple script used to load only one BS channel.
 
-2) BS_scans_json.ipynb                          script for BS data only (no JF), for looping over scan data.
-						Upgraded version (much faster) from January 2019, prepared for CytC beamtime -- p17803
-
-3) BSdataLoad_final.ipynb			script for BS data only (no JF), used for pp-XAS (or time scans) from fluo diode.
-						Greatly improved version (with Izero conditions etc etc) made during CytC beamtime.
+3) BSdataLoad_final.ipynb			---
 						
 
 
