@@ -3,6 +3,7 @@
 fname_gain = "/sf/alvra/config/jungfrau/gainMaps/JF02T09V02/gains.h5"
 fname_pede = "/sf/alvra/data/p17983/res/JF_pedestals/pedestal_20190703_1848.JF02T09V02.res.h5"
 
+#TODO store/load from files? see below
 roi1 = [4000, 7000, 150, 400]
 roi2 = [7650, 7900, 150, 400]
 roi3 = [-249,   -1,   0, 250]
@@ -19,6 +20,11 @@ parser.add_argument("output", help="Assembled output filename")
 parser.add_argument("-g", "--gain", help="Gain map filename",     default=fname_gain)
 parser.add_argument("-p", "--pede", help="Pedestal map filename", default=fname_pede)
 
+#metavar = "xmin xmax ymin ymax"
+#metavar = tuple(metavar.split())
+#parser.add_argument("-r1", "--roi1", help="Region Of Interest 1", nargs=4, type=int, default=roi1, metavar=metavar)
+#parser.add_argument("-r2", "--roi2", help="Region Of Interest 2", nargs=4, type=int, default=roi2, metavar=metavar)
+
 clargs = parser.parse_args()
 
 
@@ -29,6 +35,20 @@ ofname = clargs.output
 fname_gain = clargs.gain
 fname_pede = clargs.pede
 
+#roi1 = clargs.roi1
+#roi2 = clargs.roi2
+
+
+
+#TODO
+#import numpy as np
+
+#output_folder = "/".join(ofname.split("/")[:-2])
+#roi1_file = output_folder + "/roi1.txt"
+#roi2_file = output_folder + "/roi2.txt"
+#roi1 = np.genfromtxt(roi1_file).astype(int)
+#roi2 = np.genfromtxt(roi2_file).astype(int)
+
 
 
 import h5py
@@ -38,7 +58,7 @@ import jungfrau_utils as ju
 
 from alvra_tools import load_gain_data, load_pede_data
 from alvra_tools import load_JF_data
-from alvra_tools import save_JF_data_cropped
+from alvra_tools import save
 from alvra_tools import Clock
 from alvra_tools import crop_roi
 from alvra_tools.load_data import _get_detector_name, _apply_to_all_images
@@ -90,7 +110,10 @@ if 0 in images_roi3.shape:
     print("ROI3 seems to have removed too much. cropped images shape:", images_roi3.shape)
 
 print("> Store to", ofname)
-save_JF_data_cropped(ofname, images_roi1, images_roi2, images_roi3, pulse_ids, roi1, roi2, roi3)
+save(ofname, pulse_ids=pulse_ids,
+    images_roi1=images_roi1, images_roi2=images_roi2, images_roi3=images_roi3,
+    coords_roi1=roi1,        coords_roi2=roi2,        coords_roi3=roi3
+)
 
 
 print ("It took", clock.tick(), "seconds to process this file")
