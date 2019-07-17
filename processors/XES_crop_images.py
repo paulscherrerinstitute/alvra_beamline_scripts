@@ -87,7 +87,7 @@ with h5py.File(ifname, "r") as f:
 print("Detector name:", detector_name)
 
 print("> Load data")
-images, pulse_ids = load_JF_data(ifname, max_num_frames=None)
+images, pulse_ids = load_JF_data(ifname, nshots=None)
 
 print("> Apply gain, pedestal and pixel mask")
 images = _apply_to_all_images(ju.apply_gain_pede, images, G, P, mask, highgain=False)
