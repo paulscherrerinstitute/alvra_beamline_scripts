@@ -6,12 +6,14 @@ print = functools.partial(print, flush=True)
 
 fname_gain = "/sf/alvra/config/jungfrau/gainMaps/JF02T09V02/gains.h5"
 #fname_pede = "/sf/alvra/data/p17983/res/JF_pedestals/pedestal_20190703_1848.JF02T09V02.res.h5"
-fname_pede = "/sf/alvra/data/p17983/res/JF_pedestals/pedestal_20190703_0745.JF02T09V02.res.h5"
+#fname_pede = "/sf/alvra/data/p17983/res/JF_pedestals/pedestal_20190703_0745.JF02T09V02.res.h5"
+fname_pede = "/sf/alvra/data/p17983/res/JF_pedestals/pedestal_20190723_1255.JF02T09V02.res.h5"
 
 #TODO store/load from files? see below
-roi1 = [4000, 7000, 150, 400]
-roi2 = [7650, 7900, 150, 400]
-roi3 = [-249,   -1,   0, 250]
+roi1 = [3200, 4000, 0, 512]
+roi2 = [4900, 5200, 0, 512]
+roi3 = [7100, 7300, 0, 512]
+roi4 = [6900, 7100, 0, 512]
 
 
 
@@ -74,8 +76,11 @@ clock = Clock()
 print("Set up gain, pedestal and pixel mask")
 
 print("> Load")
-G         = load_gain_data(fname_gain)
-P, mask   = load_pede_data(fname_pede)
+print("gain file:", fname_gain)
+print("pede file:", fname_pede)
+
+G        = load_gain_data(fname_gain)
+P, mask  = load_pede_data(fname_pede)
 
 print("Dimensions of G: ", G.shape)
 print("Dimensions of P: ", P.shape)
@@ -100,8 +105,8 @@ if module_maps is not None:
     print ("Will apply module map:", module_maps[0])
     images_full = []
     for image, module_map in zip(images, module_maps):
-        image, pixel_mask = apply_module_map(image, module_map, mask)
-        image = ju.apply_gain_pede(image, G, P, mask, highgain=False)
+        image, mask_mod = apply_module_map(image, module_map, mask)
+        image = ju.apply_gain_pede(image, G, P, mask_mod, highgain=False)
         images_full.append(image)
     images = images_full
 else:
@@ -115,6 +120,7 @@ print("> Crop")
 images_roi1 = crop_roi(images, roi1)
 images_roi2 = crop_roi(images, roi2)
 images_roi3 = crop_roi(images, roi3)
+images_roi4 = crop_roi(images, roi4)
 
 if 0 in images_roi1.shape:
     print("ROI1 seems to have removed too much. cropped images shape:", images_roi1.shape)
@@ -125,10 +131,13 @@ if 0 in images_roi2.shape:
 if 0 in images_roi3.shape:
     print("ROI3 seems to have removed too much. cropped images shape:", images_roi3.shape)
 
+if 0 in images_roi4.shape:
+    print("ROI4 seems to have removed too much. cropped images shape:", images_roi3.shape)
+
 print("> Store to", ofname)
 save(ofname, pulse_ids=pulse_ids,
-    images_roi1=images_roi1, images_roi2=images_roi2, images_roi3=images_roi3,
-    coords_roi1=roi1,        coords_roi2=roi2,        coords_roi3=roi3
+    images_roi1=images_roi1, images_roi2=images_roi2, images_roi3=images_roi3, images_roi4=images_roi4,
+    coords_roi1=roi1,        coords_roi2=roi2,        coords_roi3=roi3,        coords_roi4=roi4
 )
 
 
