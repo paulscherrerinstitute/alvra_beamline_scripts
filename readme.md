@@ -3,7 +3,7 @@ This repository contains mainly Jupyter notebooks scripts to be used for the ana
 Files:
 
 
-Sripts for JF data loading and plotting:
+Scripts for JF data loading and plotting:
 
 1) XES_scans_process.ipynb			script to select ROIs in the JF4p5 data and save only cropped data.
 						This is *not* used for any analysis.
