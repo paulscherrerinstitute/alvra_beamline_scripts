@@ -5,61 +5,42 @@ Files:
 
 Scripts for JF data loading and plotting:
 
-1) XES_scans_process.ipynb			script to select ROIs in the JF4p5 data and save only cropped data.
-						This is *not* used for any analysis.
-						Use it to crop/process (pedestals & gain corrections and save the raw data)
-						This procedure has been made automatic with the watcher.py and the associated 
-						XES_process.py script, but can be still run manually with this notebook.
-						
-2) XES_scans_json_final.ipynb			script for JF4p5 data, can be used for analysis of 3 different kind of files:
-						a) individual independent files (recorded with bsdaqJF.acquire)
-						b) individual files in a scan (recorded with scansJF.ascan)
-						c) looping through all the files of a scan (recorded with scansJF.ascan)
-						This script loads the all image from the detector and does the ROI selection.
-						If the ROIs have been already saved in a separate (smaller) file, use the 
-						"XES_scans_readout_cropped_final.ipynb" script.
-						
-3) XES_scans_readout_cropped_final.ipynb	script for JF4p5 data, used for analysis of single files or files in a scan.
-						Used for cropped data.
-						
-						
-Scripts for BS data loading and plotting:
+1) XES_pump_probe.ipynb
+script to load the full detector (JF4p5M) images, convert them (apply gain, pedestal, module map, crop ROIs). It can be used to load a single file or an energy (resonanat XES) or time scan. The analysis is done with thresholding, summing and distributing ON and OFF. Finally it plots the projections for pump probe XES data. Uses the new jungfrau_utils library (needs jungfrau_utils = 0.8.5), 8000 images require about 45 seconds processing time.
 
-1) BS_check_Laser_int.ipynb			script for BS data only (no JF), to look at signals from laser diodes.
-						Used to confirm illumination mode (4/1, 11/1, 19/1) etc etc.
-						
-2) BSread_singleChannel.ipynb			simple script used to load only one BS channel.
+2) XES_pump_probe_CROP.ipynb			
+script to load cropped ROIs, set up in run_control. The data are already converted and reduced within the pipeline and saved in /sf/alvra/data/*pgroup*/res. It can be used to load a single file or an energy (resonanat XES) or time scan. The script loads the images, apply threshold, and distribute ON and OFF. It plots the projections for pump probe XES data. Does not need the new jungfrau_utils.
 
-3) BSdataLoad_final.ipynb			---
-						
+Scripts for XANES data loading and plotting:
 
+3) XAS_monoscans_norm.ipynb	
+script for loading Xray diode (PIPS) data for plotting time resolved XANES in TFY. Normalization is done shot-to-shot after filtering the shots based on histograms of fluorescence and Izero data (correlation). 
 
-Scripts for the analysis of YAG pump probe data for T0 determination:
-						
-1) YAG_pumpprobe_BS.ipynb                       script for analyzing the YAG data (FEL pump, laser probe).
-						In this script the laser runs at double rate than the FEL (50 vs 25 Hz for instance).
-						The script is very similar to BS_analysis, but better create another one with the proper assignment of FEL on/off shots
-						Version prepared for the SFX Rhodopsin beamtime -- p17569 						
+4) XAS_monoscans_norm_noPP.ipynb	
+script for loading Xray diode (PIPS) data for plotting in TFY. Rarely use, just in case of no pump probe data, however the previous script is more regularly updated and can handle the same (by summing pump and unpump data). 
 
-2) YAG_pumpprobe_BS_GK.ipynb			same as before (YAG_pumpprobe_BS) 
-						Most recent version, updated and used during the SFX Rhodopsin beamtime -- p17569
+5) XAS_timescan_norm.ipynb	
+script for loading Xray diode (PIPS) data for plotting time scans at fixed incident energy in TFY. Normalization is done shot-to-shot after filtering the shots based on histograms of fluorescence and Izero data (correlation). 
 
-3) YAG_scans_json.ipynb				script for YAG scans, with more efficient and fast data loading and on/off distribution.
-						Version created in January 2019, prepared for the CytC beamtime -- p17803
+6) XAS_fluencescan_norm.ipynb	
+script for loading Xray diode (PIPS) data for plotting fluence scans at fixed delay incident energy in TFY. Normalization is done shot-to-shot after filtering the shots based on histograms of fluorescence and Izero data (correlation). 
 
-4) YAG_scans_json_norm.ipynb			script for YAG scans, status as at the end of the CytC beamtime -- p17803
-						Added normalization shot-to-shot, ready for KR2 sfx beamtime -- p17806
+Scripts for general beamline use:
 
-5) YAG_scans_json_norm_Izero.ipynb		Same as before, but with additional condition on Izero intensity.
-						Ready for KR2 sfx beamtime -- p17806
+7) YAG_pump_probe.ipynb
+Script to read the cross-correlation YAG scans for t0 determination. Normalization is done shot-to-shot and averaged. 
 
+8) scanMono_noPP.ipynb
+Script to read the transmission through the mono with a downstream intensity monitor and plot the spectrum, also fitted with a Gaussian curve to return the central energy and the width.
 
-Scripts for the analysis of the knife edge scans for xray & laser spotsize determination: 
+9) Knife_edge_noPP.ipynb
+Script to read the FEL transmission across the knife edges, used to measure the focused beam size. The error function plot can be fitted to return the width in X and Y.
 
-1) Knife_edge_scans.ipynb			script for Knife edge scans
-						Created and used during the SFX Rhodopsin beamtime -- p17569
+10) Jet_scans_noPP.ipynb
+Script to read and plot the fluorescence (and transmission) Xray diode as a function of X stage values, run to precisely determine the jet position.
 
-2) Knife_edge_scans_json.ipynb			script for Knife edge scans
-						Upgraded version (faster) created in January 2019, prepared for CytC beamtime -- p17803
-						Kept the same name for the improved version used during CytC beamtime.
-						Added loaded channels and plots also for jet X-scans.
+11) BS_check_Laser_int.ipynb
+script for reading data to look at signals from laser diodes. Used to confirm illumination mode (4/1, 11/1, 19/1) in the debug phase of these different modes.
+
+12) BSread_singleChannel.ipynb
+simple script used to load only one BS channel. Can be used to plot correlations between different detectors used as intensity monitors (PBPSs, gas monitor, etc etc)
