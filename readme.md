@@ -51,4 +51,4 @@ script for reading data to look at signals from laser diodes. Used to confirm il
 simple script used to load only one BS channel. Can be used to plot correlations between different detectors used as intensity monitors (PBPSs, gas monitor, etc etc)
 
 7) PALM_processing.ipynb
-Script used to load and process PALM data, based on similar scripts from Photon Diagnostics group (C. Arrell). Composed essentially by two parts: a) loading and processing of a THz scan recorded in eco, b) extraction of arrival times with the palm_setup function contained within the Photodiag package. Picks up the pumped shots via event code (if saved).
+Script used to load and process PALM data, based on similar scripts from Photon Diagnostics group (C. Arrell). Composed essentially by two parts: a) loading and processing of a THz scan recorded in eco, b) extraction of arrival times with the palm_setup function contained within the Photodiag package. Picks up the pumped shots via event code (if saved). This is now deprecated.
