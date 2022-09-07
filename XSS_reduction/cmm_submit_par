@@ -1,0 +1,45 @@
+#!/bin/bash
+RUN=$1
+NUM_FILES=$2
+
+CORES=20
+MEM=456  # in GB
+
+# zero pad
+RUN=`printf %04d $RUN`
+
+SUBMIT=./.submits/.slurm.${RUN}
+
+cat > $SUBMIT << !EOF
+#!/bin/bash
+#SBATCH -J run_$RUN
+#SBATCH -o ./Logs/run_$RUN.%J.log
+#SBATCH -e ./Logs/run_$RUN.%J.err
+#SBATCH --partition=day
+#SBATCH --nodes 1
+#SBATCH --ntasks-per-node=$CORES
+#SBATCH --mem=${MEM}G
+
+t0=\`date +%s\`
+echo "setup env"
+source /sf/maloja/applications/miniconda3/etc/profile.d/conda.sh
+conda activate alvra-analysis-p20222
+module load gcc/4.8.5 mpich/3.2.1
+
+python --version
+#source /opt/psi/Programming/intel/16.2/bin/compilervars.sh intel64
+which mpirun
+echo "Hostname : "\`hostname\`
+echo "env is set"
+echo ==========================================================================
+
+#mpirun python /das/work/p19/p19198/thies/mpi_lineout_save.py \$1
+mpirun -np $CORES python -u ./code/mpi_reduce.py $RUN  
+#python -u ./code/mpi_reduce.py $RUN
+tdone=\`date +%s\`
+
+echo ==========================================================================
+echo "exec time: " \$((tdone-t0))
+!EOF
+
+sbatch -J $RUN $SUBMIT 
